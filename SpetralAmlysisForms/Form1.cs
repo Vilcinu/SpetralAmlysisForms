@@ -55,60 +55,24 @@ namespace SpetralAmlysisForms
             return (Math.Sin(2 * ARG) + Math.Sin(5 * ARG));
         }
 
-        public float FindMin(Complex[] inputArray, int type)//type = REAL,IMAGINARY,PHASE,MAGNITUDE;
+        public double FindMin(double[] input)//type = REAL,IMAGINARY,PHASE,MAGNITUDE;
         {
-            float min = 0;
-            for (int n = 0; n < inputArray.Length; n++)
+            double min = double.PositiveInfinity;
+            for (int n = 0; n < input.Length; n++)
             {
-                if (type == Constants.REAL)
-                {
-                    if (inputArray[n].Real < min)
-                        min = (float)inputArray[n].Real;
-                }
-                if (type == Constants.IMAGINARY)
-                {
-                    if (inputArray[n].Imaginary < min)
-                        min = (float)inputArray[n].Imaginary;
-                }
-                if (type == Constants.PHASE)
-                {
-                    if (inputArray[n].Phase < min)
-                        min = (float)inputArray[n].Phase;
-                }
-                if (type == Constants.MAGNITUDE)
-                {
-                    if (inputArray[n].Magnitude < min)
-                        min = (float)inputArray[n].Magnitude;
-                }
+                if (input[n] < min)
+                    min = input[n];
             }
             return min;
         }
 
-        public float FindMax(Complex[] inputArray, int type)//type = REAL,IMAGINARY,PHASE,MAGNITUDE;
+        public double FindMax(double[] input)//type = REAL,IMAGINARY,PHASE,MAGNITUDE;
         {
-            float max = 0;
-            for (int n = 0; n < inputArray.Length; n++)
+            double max = -double.PositiveInfinity;
+            for (int n = 0; n < input.Length; n++)
             {
-                if (type == Constants.REAL)
-                {
-                    if (inputArray[n].Real > max)
-                        max = (float)inputArray[n].Real;
-                }
-                if (type == Constants.IMAGINARY)
-                {
-                    if (inputArray[n].Imaginary > max)
-                        max = (float)inputArray[n].Imaginary;
-                }
-                if (type == Constants.PHASE)
-                {
-                    if (inputArray[n].Phase > max)
-                        max = (float)inputArray[n].Phase;
-                }
-                if (type == Constants.MAGNITUDE)
-                {
-                    if (inputArray[n].Magnitude > max)
-                        max = (float)inputArray[n].Magnitude;
-                }
+                if (input[n] > max)
+                    max = input[n];
             }
             return max;
         }
@@ -143,11 +107,12 @@ namespace SpetralAmlysisForms
         {
             series.Points.Clear();
             int power = (int)Math.Pow(2, input);
+            filt.Sample = power * 2;
             Complex[] testvar = new Complex[power];
             double[] testvarDouble = new double[power];
             for (int n = 0; n < power; n++)
             {
-                double argument = 2 * n;
+                double argument = 2 * n* Math.PI;
                 testvar[n] = new Complex(Math.Sin(1 * argument) + Math.Sin(5 * argument) + Math.Sin(20 * argument), 0);
                 testvarDouble[n] = (Math.Sin(1 * argument) + Math.Sin(5 * argument) + Math.Sin(20 * argument));
             }
@@ -155,16 +120,26 @@ namespace SpetralAmlysisForms
             {
                 for (int n = 0; n < power; n++)
                 {
-                    originalSignal.Points.AddXY(n / _SignalSample, testvar[n]);
+                    
+                    originalSignal.Points.AddXY(n, testvar[n]);
                 }
             }
-            testvarDouble = Filter.Filter_Signal(testvarDouble,filt.K1 ,filt.K2 ,filt.gain );
+            
+            testvarDouble = filt.Filter_Signal(testvarDouble);
+            testvarDouble = filt.For_ABS(testvarDouble);
             //testvarDouble = SDFT.sdft(testvarDouble);
+            //testvarDouble = SDFT.sdft(testvarDouble);
+
             for (int n = 0; n < power; n++)
             {
-                this.series.Points.AddXY(n / _SignalSample, testvarDouble[n]);
+                this.series.Points.AddXY(n, 20* Math.Log(testvarDouble[n]));
+                
             }
-
+            double Max = FindMax(testvarDouble);
+            //chart1.ChartAreas[0].AxisY.Maximum = 0.1;
+            //chart1.ChartAreas[0].AxisY.Minimum = -0.1;
+            chart1.ChartAreas[0].AxisX.Maximum = filt.maxFreq;
+            chart1.ChartAreas[0].AxisX.Minimum = 0;
             drawall();
         }
 
@@ -191,9 +166,9 @@ namespace SpetralAmlysisForms
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            filt.gain = 90*(hScrollBar3.Value-50)/100;
-            filt.K1 = ((double)hScrollBar1.Value/100)*20;
-            filt.K2 = 10 * hScrollBar2.Value / 100;
+            filt.gain = (double)(hScrollBar3.Value - 50) / 91;
+            filt.K1 = (double)hScrollBar1.Value / 91;
+            filt.K2 = (double)hScrollBar2.Value / 91;
             test(powerOfTwo);
         }
 

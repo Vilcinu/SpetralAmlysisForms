@@ -11,8 +11,6 @@ namespace SpetralAmlysisForms
     {
         public static Complex[] convolution(Complex[] g, Complex[] f)
         {
-            double result1;
-            double result2;
             int N = g.Length;
             if(g.Length != f.Length)
             {

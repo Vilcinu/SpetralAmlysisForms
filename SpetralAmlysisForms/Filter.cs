@@ -5,38 +5,54 @@ namespace SpetralAmlysisForms
 {
     public class Filter
     {
+        double _maxFreq ;
+        double _Sample  ;
+        double _K1      ;
+        double _K2      ;
+        double _gain    ;
+        double _bandwith;
         public Filter() 
         {
-            maxFreq = 0;
-            Sample = 0;
-            K1 = 0;
-            K2 = 0;
-            gain = 0;
-            bandwith = 0;
+            _Sample = 300;
+            _maxFreq = _Sample/2;
+            _K1 = 0;
+            _K2 = 0;
+            _gain = 0;
+            _bandwith = 0;
 
         }
-        public double maxFreq;
+        public double maxFreq
+        {
+            set
+            {
+                //_maxFreq = value;
+            }
+            get
+            {
+                return _maxFreq;
+            }
+        }
         public double Sample
         {
-            set { Sample = value;}
-            get { return Sample; }
+            set { this._Sample = value;this._maxFreq = this._Sample/2; }
+            get { return this._Sample; }
         }
         public double K1
         {
-            set { K1 = -Math.Cos(Math.PI * value / maxFreq); }
-            get { return K1; }
+            set { this._K1 = -Math.Cos(Math.PI * value / maxFreq); }
+            get { return this._K1; }
         }
         public double K2
         {
-            set { K2 = 1 - Math.Sin(Math.PI * value / maxFreq) / Math.Cos(Math.PI * value / maxFreq); }
-            get { return K1; }
+            set { this._K2 = 1 - Math.Sin(Math.PI * value / this._maxFreq) / Math.Cos(Math.PI * value / this._maxFreq); }
+            get { return this._K1; }
         }
         public double gain
         {
-            set { gain = Math.Pow(10, (value / 20)); }
-            get { return gain; }
+            set { this._gain = Math.Pow(10, (value / 20)); }
+            get { return this._gain; }
         }
-        public double bandwith { set; get; }
+        public double bandwith { set { this._bandwith = value; } get { return this._bandwith; } }
 
         Complex e(double arg)
         {
@@ -89,7 +105,7 @@ namespace SpetralAmlysisForms
 
             return Y;
         }
-        public static double[] Filter_Signal(double[] Xn, double k1, double k2, double gain)
+        public double[] Filter_Signal(double[] Xn)
         {
             double[] xn = Xn;
             double[] yn = Xn;
@@ -99,40 +115,50 @@ namespace SpetralAmlysisForms
                 {
                     if (n == 0)
                     {
-                        yn[0] = 0.5f * (1 + gain + k2 * (1 - gain)) * xn[n];
+                        yn[0] = 0.5f * (1 + _gain + _K2 * (1 - _gain)) * xn[n];
                     }
                     else if (n == 1)
                     {
-                        yn[1] = (0.5f * ((1 + gain) + k2 * (1 - gain))) * xn[n]
-                            + (k1 * (1 + k2)) * xn[n - 1] - k1
-                            * (1 + k2) * yn[n - 1];
+                        yn[1] = (0.5f * ((1 + _gain) + _K2 * (1 - _gain))) * xn[n]
+                            + (_K1 * (1 + _K2)) * xn[n - 1] - _K1
+                            * (1 + _K2) * yn[n - 1];
                     }
                     else
                     {
-                        yn[n] = (0.5f * ((1 + gain) + k2 * (1 - gain))) * xn[n]
-                            + (k1 * (1 + k2)) * xn[n - 1] + (0.5f * (k2 * (1 + gain) + (1 - gain))) * xn[n - 2] - k1
-                            * (1 + k2) * yn[n - 1] - k2 * yn[n - 2];
+                        yn[n] = (0.5f * ((1 + _gain) + _K2 * (1 - _gain))) * xn[n]
+                            + (_K1 * (1 + _K2)) * xn[n - 1] + (0.5f * (_K2 * (1 + _gain) + (1 - _gain))) * xn[n - 2] - _K1
+                            * (1 + _K2) * yn[n - 1] - _K2 * yn[n - 2];
+                    }
+                    if(yn[n]> 1.7976931348623157E+308)
+                    {
+                        yn[n] = 1.7976931348623157E+307;
                     }
                 }
 
-                xn = yn;
+                //xn = yn;
             }
             return yn; // возвращает массив выходных значений (отклик) сигнала 
         }
-        private double For_ABS(float x)
+        public double[] For_ABS(double[] x)
         {
             var k1 = K1;
             var k2 = K2;
             var k3 = k1 * (1 + k2);
-            return float.Parse(Convert.ToString(0.5 * Math.Sqrt((Math.Pow((1 + gain) * (1 + k3 *
-           Math.Cos(Math.PI * x / maxFreq) + k2 * Math.Cos(2 * Math.PI * x / maxFreq)) + (1 -
-           gain) * (k2 + k3 * Math.Cos(Math.PI * x / maxFreq) + Math.Cos(2 * Math.PI * x /
-           maxFreq)), 2) + Math.Pow((1 + gain) * (-k3 * Math.Sin(Math.PI * x / maxFreq) - k2 *
-           Math.Sin(2 * Math.PI * x / maxFreq)) + (1 - gain) * (-k3 * Math.Sin(Math.PI * x /
-           maxFreq) - Math.Sin(2 * Math.PI * x / maxFreq)), 2)) / (Math.Pow((1 + k3 *
-           Math.Cos(Math.PI * x / maxFreq) + k2 * Math.Cos(2 * Math.PI * x / maxFreq)), 2) +
-           Math.Pow((-k3 * Math.Sin(Math.PI * x / maxFreq) - k2 * Math.Sin(2 * Math.PI * x /
-           maxFreq)), 2)))));
+            double[] Y = new double[x.Length];
+            for (int n = 0; n < x.Length; n++)
+            {
+                Y[n] = 0.5 * Math.Sqrt((Math.Pow((1 + this._gain) * (1 + k3 *
+               Math.Cos(Math.PI * x[n] / this._maxFreq) + k2 * Math.Cos(2 * Math.PI * x[n] / this._maxFreq)) + (1 -
+                this._gain) * (k2 + k3 * Math.Cos(Math.PI * x[n] / this._maxFreq) + Math.Cos(2 * Math.PI * x[n] /
+               this._maxFreq)), 2) + Math.Pow((1 + this._gain) * (-k3 * Math.Sin(Math.PI * x[n] / this._maxFreq) - k2 *
+               Math.Sin(2 * Math.PI * x[n] / this._maxFreq)) + (1 - this._gain) * (-k3 * Math.Sin(Math.PI * x[n] /
+               this._maxFreq) - Math.Sin(2 * Math.PI * x[n] / this._maxFreq)), 2)) / (Math.Pow((1 + k3 *
+               Math.Cos(Math.PI * x[n] / this._maxFreq) + k2 * Math.Cos(2 * Math.PI * x[n] / this._maxFreq)), 2) +
+               Math.Pow((-k3 * Math.Sin(Math.PI * x[n] / this._maxFreq) - k2 * Math.Sin(2 * Math.PI * x[n] /
+               this._maxFreq)), 2)));
+            }
+
+            return Y;
         }
  
     }
