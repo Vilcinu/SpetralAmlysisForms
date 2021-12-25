@@ -22,5 +22,17 @@ namespace SpetralAmlysisForms.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80, 80, 80")]
+        public global::System.Drawing.Color ButtonsFadeAwayColor {
+            get {
+                return ((global::System.Drawing.Color)(this["ButtonsFadeAwayColor"]));
+            }
+            set {
+                this["ButtonsFadeAwayColor"] = value;
+            }
+        }
     }
 }

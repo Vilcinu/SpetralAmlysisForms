@@ -2,6 +2,9 @@
 using System.Drawing;
 using System.Numerics;
 using System.Windows.Forms;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
 
 namespace SpetralAmlysisForms
 {
@@ -37,6 +40,11 @@ namespace SpetralAmlysisForms
         public double k2;
         public double gain;
         private int powerOfTwo = 8;
+        private object sahredsender;
+        private double buttonFadeAwayStep = 0.5;
+        Color GetColor;
+        Color GetColorOffset = Color.FromArgb(20, 20, 20);
+        private System.Windows.Forms.Button[] Buttons;
         public Form1()
         {
             InitializeComponent();
@@ -112,19 +120,19 @@ namespace SpetralAmlysisForms
             double[] testvarDouble = new double[power];
             for (int n = 0; n < power; n++)
             {
-                double argument = 2 * n* Math.PI;
+                double argument = 2 * n * Math.PI;
                 testvar[n] = new Complex(Math.Sin(1 * argument) + Math.Sin(5 * argument) + Math.Sin(20 * argument), 0);
                 testvarDouble[n] = (Math.Sin(1 * argument) + Math.Sin(5 * argument) + Math.Sin(20 * argument));
             }
-            if(originalSignal != null)
+            if (originalSignal != null)
             {
                 for (int n = 0; n < power; n++)
                 {
-                    
+
                     originalSignal.Points.AddXY(n, testvar[n]);
                 }
             }
-            
+
             testvarDouble = filt.Filter_Signal(testvarDouble);
             testvarDouble = filt.For_ABS(testvarDouble);
             //testvarDouble = SDFT.sdft(testvarDouble);
@@ -132,21 +140,16 @@ namespace SpetralAmlysisForms
 
             for (int n = 0; n < power; n++)
             {
-                this.series.Points.AddXY(n, 20* Math.Log(testvarDouble[n]));
-                
+                this.series.Points.AddXY(n, 20 * Math.Log(testvarDouble[n]));
+
             }
             double Max = FindMax(testvarDouble);
-            //chart1.ChartAreas[0].AxisY.Maximum = 0.1;
+            chart1.ChartAreas[0].AxisY.Maximum = 0.1;
             //chart1.ChartAreas[0].AxisY.Minimum = -0.1;
             chart1.ChartAreas[0].AxisX.Maximum = filt.maxFreq;
             chart1.ChartAreas[0].AxisX.Minimum = 0;
             drawall();
         }
-
-        private void backgroundWorker1_DoWork(object sender, MouseEventArgs e)
-        {
-        }
-
         private void circleKnob1_Click(object sender, EventArgs e)
         {
             openChildForm();
@@ -180,6 +183,46 @@ namespace SpetralAmlysisForms
                 test(powerOfTwo);
             }
             catch { }
+        }
+        private void fadeAnim()
+        { 
+        }
+        private void AnimationTimer_Tick(object sender, EventArgs e)
+        {
+            //object iternalsender = sahredsender;
+            for (int n = 0; n < circleKnob.Length; n++)
+            {
+                if (circleKnob[n].BackColor != Color.FromArgb(80, 80, 80))
+                {
+                    circleKnob[n].BackColor = Color.FromArgb((int)(circleKnob[n].BackColor.R - buttonFadeAwayStep), (int)(circleKnob[n].BackColor.G - buttonFadeAwayStep), (int)(circleKnob[n].BackColor.B - buttonFadeAwayStep));
+                    //sahredsender = iternalsender;
+                    AnimationTimer.Start();
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+
+        private void circleKnob2_MouseLeave(object sender, EventArgs e)
+        {
+            AnimationTimer.Start();
+        }
+
+        private void circleKnob2_MouseEnter(object sender, EventArgs e)
+        {
+            ((Button)sender).BackColor = Color.FromArgb(120, 120, 120);
+        }
+
+        private void circleKnob3_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
