@@ -34,5 +34,11 @@ namespace SpetralAmlysisForms
             Form1.formContainer.k2 = 0.01 + (2 * vScrollBar2.Value / 100);
             Form1.formContainer.test(5);
         }
+
+        private void Graph_Deactivate(object sender, EventArgs e)
+        {
+            Form1.formContainer.graph = this;
+            Form1 form1 = new Form1();
+        }
     }
 }

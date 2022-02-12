@@ -34,10 +34,10 @@ namespace SpetralAmlysisForms
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Graph));
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.circleKnob1 = new SpetralAmlysisForms.Buttons.CircleKnob();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.vScrollBar2 = new System.Windows.Forms.VScrollBar();
             this.vScrollBar3 = new System.Windows.Forms.VScrollBar();
+            this.circleKnob1 = new SpetralAmlysisForms.Buttons.CircleKnob();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,22 +60,6 @@ namespace SpetralAmlysisForms
             this.chart1.Size = new System.Drawing.Size(800, 450);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
-            // 
-            // circleKnob1
-            // 
-            this.circleKnob1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.circleKnob1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.circleKnob1.FlatAppearance.BorderSize = 0;
-            this.circleKnob1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.circleKnob1.ForeColor = System.Drawing.Color.White;
-            this.circleKnob1.Image = ((System.Drawing.Image)(resources.GetObject("circleKnob1.Image")));
-            this.circleKnob1.Location = new System.Drawing.Point(723, 393);
-            this.circleKnob1.Margin = new System.Windows.Forms.Padding(8);
-            this.circleKnob1.Name = "circleKnob1";
-            this.circleKnob1.Size = new System.Drawing.Size(70, 50);
-            this.circleKnob1.TabIndex = 70;
-            this.circleKnob1.UseVisualStyleBackColor = false;
-            this.circleKnob1.Click += new System.EventHandler(this.circleKnob1_Click);
             // 
             // vScrollBar1
             // 
@@ -107,6 +91,22 @@ namespace SpetralAmlysisForms
             this.vScrollBar3.TabIndex = 73;
             this.vScrollBar3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar3_Scroll);
             // 
+            // circleKnob1
+            // 
+            this.circleKnob1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.circleKnob1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.circleKnob1.FlatAppearance.BorderSize = 0;
+            this.circleKnob1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.circleKnob1.ForeColor = System.Drawing.Color.White;
+            this.circleKnob1.Image = ((System.Drawing.Image)(resources.GetObject("circleKnob1.Image")));
+            this.circleKnob1.Location = new System.Drawing.Point(723, 393);
+            this.circleKnob1.Margin = new System.Windows.Forms.Padding(8);
+            this.circleKnob1.Name = "circleKnob1";
+            this.circleKnob1.Size = new System.Drawing.Size(70, 50);
+            this.circleKnob1.TabIndex = 70;
+            this.circleKnob1.UseVisualStyleBackColor = false;
+            this.circleKnob1.Click += new System.EventHandler(this.circleKnob1_Click);
+            // 
             // Graph
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -118,9 +118,10 @@ namespace SpetralAmlysisForms
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.circleKnob1);
             this.Controls.Add(this.chart1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Graph";
             this.Text = "Graph";
+            this.Deactivate += new System.EventHandler(this.Graph_Deactivate);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 

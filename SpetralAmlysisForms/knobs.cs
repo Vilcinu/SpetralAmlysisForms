@@ -10,8 +10,8 @@ namespace SpetralAmlysisForms
     {
         public int positionX;
         int positionY;
-        float property1;
-        float property2;
+        double property1;
+        double property2;
         String knobname = "knob";
 
         public void XY(int input1,int input2)
@@ -30,12 +30,12 @@ namespace SpetralAmlysisForms
             return positionY;
         }
 
-        public void prop1(float input)
+        public void prop1(double input)
         {
             property1 = input;
         }
 
-        public void prop2(float input)
+        public void prop2(double input)
         {
             property2 = input;
         }

@@ -5,64 +5,76 @@ namespace SpetralAmlysisForms
 {
     public class Filter
     {
-        double _maxFreq ;
-        double _Sample  ;
-        double _K1      ;
-        double _K2      ;
-        double _gain    ;
-        double _bandwith;
-        public Filter() 
+        private double _maxFreq;
+        private double _Sample;
+        private double _K1;
+        private double _K2;
+        private double _gain;
+        private double _bandwith;
+        private double[] _a = new double[2];
+        private double[] _b = new double[3];
+
+        public Filter()
         {
             _Sample = 300;
-            _maxFreq = _Sample/2;
+            _maxFreq = _Sample / 2;
             _K1 = 0;
             _K2 = 0;
             _gain = 0;
             _bandwith = 0;
-
         }
+
         public double maxFreq
         {
             set
             {
-                //_maxFreq = value;
+                _maxFreq = value;
+                if (this._maxFreq != this._Sample / 2 && this._Sample != null)
+                {
+                    this._maxFreq = this._Sample / 2;
+                }
             }
             get
             {
                 return _maxFreq;
             }
         }
+
         public double Sample
         {
-            set { this._Sample = value;this._maxFreq = this._Sample/2; }
+            set { this._Sample = value; this._maxFreq = this._Sample / 2; }
             get { return this._Sample; }
         }
+
         public double K1
         {
-            set { this._K1 = -Math.Cos(Math.PI * value / maxFreq); }
+            set { this._K1 = -Math.Cos(Math.PI * value / this._maxFreq); }
             get { return this._K1; }
         }
+
         public double K2
         {
-            set { this._K2 = 1 - Math.Sin(Math.PI * value / this._maxFreq) / Math.Cos(Math.PI * value / this._maxFreq); }
-            get { return this._K1; }
+            set { this._K2 = 1 - (Math.Sin(Math.PI * value / this._maxFreq) / Math.Cos(Math.PI * value / this._maxFreq)); }
+            get { return this._K2; }
         }
+
         public double gain
         {
-            set { this._gain = Math.Pow(10, (value / 20)); }
+            set { this._gain = Math.Round(Math.Pow(10, (value / 20)), 7); }
             get { return this._gain; }
         }
+
         public double bandwith { set { this._bandwith = value; } get { return this._bandwith; } }
 
-        Complex e(double arg)
+        private Complex e(double arg)
         {
             Complex Result;
             Result = new Complex(Math.Cos(arg), Math.Sin(arg));
             return Result;
         }
+
         public static Complex[] filter(Complex[] X, double w, double B, double alpha, double maxw)
         {
-
             int filteParamsLength = 3;
             alpha = Math.Pow(10, alpha / 20);
             double accFuncArg = Math.PI / maxw;
@@ -105,44 +117,62 @@ namespace SpetralAmlysisForms
 
             return Y;
         }
-        public double[] Filter_Signal(double[] Xn)
+        private void calculateCoefficents()
         {
-            double[] xn = Xn;
-            double[] yn = Xn;
+            this._b[0] = (0.5 * (1 + this._gain + this._K2 * (1 - this._gain)));
+            this._b[1] = (0.5 * (1 - this._gain + this._K2 * (1 + this._gain)));
+            this._b[2] = (this._K1 * (1 + this._K2));
+            this._a[0] = (this._K1 * (1 + this._K2));
+            this._a[1] = (this._K2);
+        }
+        public double[] Filter_Signal(double[] X)
+        {
+            calculateCoefficents();
+            double[] Y = new double[X.Length];
             for (int number = 0; number < 1; number++)
             {
-                for (int n = 0; n < Xn.Length; n++)
+                for (int n = 0; n < X.Length; n++)
                 {
-                    if (n == 0)
+                    /*if (n == 0)
                     {
-                        yn[0] = 0.5f * (1 + _gain + _K2 * (1 - _gain)) * xn[n];
+                        yn[0] = 0.5f * (1 + this._gain + this._K2 * (1 - this._gain)) * xn[n];
                     }
                     else if (n == 1)
                     {
-                        yn[1] = (0.5f * ((1 + _gain) + _K2 * (1 - _gain))) * xn[n]
-                            + (_K1 * (1 + _K2)) * xn[n - 1] - _K1
-                            * (1 + _K2) * yn[n - 1];
+                        yn[1] = (0.5f * ((1 + this._gain) + this._K2 * (1 - this._gain))) * xn[n]
+                            + (this._K1 * (1 + this._K2)) * xn[n - 1] - (this._K1
+                            * (1 + this._K2) * yn[n - 1]);
                     }
                     else
                     {
-                        yn[n] = (0.5f * ((1 + _gain) + _K2 * (1 - _gain))) * xn[n]
-                            + (_K1 * (1 + _K2)) * xn[n - 1] + (0.5f * (_K2 * (1 + _gain) + (1 - _gain))) * xn[n - 2] - _K1
-                            * (1 + _K2) * yn[n - 1] - _K2 * yn[n - 2];
-                    }
-                    if(yn[n]> 1.7976931348623157E+308)
+                        yn[n] = (0.5f * ((1 + this._gain) + _K2 * (1 - this._gain))) * xn[n]
+                            + (this._K1 * (1 + this._K2)) * xn[n - 1] + (0.5f * (this._K2 * (1 + this._gain) + (1 - this._gain))) * xn[n - 2] - (_K1
+                            * (1 + this._K2) * yn[n - 1]) - this._K2 * yn[n - 2];
+                    }*/
+                    for(int i = 0; i < 2; i++)
                     {
-                        yn[n] = 1.7976931348623157E+307;
+                        if (n - i == 0) break;
+                        //coefficient 'b' part
+                        Y[n] = this._b[i] * X[n - i];
                     }
+                    for (int k = 0; k < 1; k++)
+                    {
+                        if (n - k == 0) break;
+                        //coefficient 'b' part
+                        Y[n] -= this._a[k] * X[n - k];
+                    }
+
                 }
 
                 //xn = yn;
             }
-            return yn; // возвращает массив выходных значений (отклик) сигнала 
+            return Y; // возвращает массив выходных значений (отклик) сигнала
         }
+
         public double[] For_ABS(double[] x)
         {
-            var k1 = K1;
-            var k2 = K2;
+            var k1 = this._K1;
+            var k2 = this._K2;
             var k3 = k1 * (1 + k2);
             double[] Y = new double[x.Length];
             for (int n = 0; n < x.Length; n++)
@@ -160,6 +190,5 @@ namespace SpetralAmlysisForms
 
             return Y;
         }
- 
     }
 }
