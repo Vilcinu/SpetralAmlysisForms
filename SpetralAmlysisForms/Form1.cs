@@ -62,7 +62,7 @@ namespace SpetralAmlysisForms
 
         public double f(int arg)
         {
-            return (Math.Sin(arg * evrywhereValue) + (Math.Sin(69 * arg) / evrywhereValue) + (Math.Sin(evrywhereValue * evrywhereValue * arg) / 25) + Math.Sin(arg * (evrywhereValue + evrywhereValue)));
+            return arg;//(Math.Sin(arg * evrywhereValue) + (Math.Sin(69 * arg) / evrywhereValue) + (Math.Sin(evrywhereValue * evrywhereValue * arg) / 25) + Math.Sin(arg * (evrywhereValue + evrywhereValue)));
         }
 
         public double FindMin(double[] input)//type = REAL,IMAGINARY,PHASE,MAGNITUDE;
@@ -113,11 +113,11 @@ namespace SpetralAmlysisForms
         public void test(int input)//input amount;
         {
             series.Points.Clear();
-            
+             
             
             int power = (int)Math.Pow(2, input);
             Signal = new double[power];
-            filt.Sample = input;
+            filt.Sample = power*2;
             for (int n = 0; n < power; n++)
             {
                 //testvar[n] = new Complex(Math.Sin(1 * argument) + Math.Sin(5 * argument) + Math.Sin(20 * argument), 0);
@@ -125,14 +125,14 @@ namespace SpetralAmlysisForms
                 
             }
             originalSignal = Signal;
-            Signal = filt.Filter_Signal(Signal);
+            //Signal = filt.Filter_Signal(Signal);
 
 /*            for (int n = 0; n < power; n++)
             {
                 forData[n] = new Complex(Signal[n], 0); 
             }
 */
-            //Signal = filt.For_ABS(Signal);
+            Signal = filt.For_ABS(Signal);
             
             //Signal = SDFT.sdft(Signal);/**/
             //testvarDouble = SDFT.sdft(testvarDouble);
