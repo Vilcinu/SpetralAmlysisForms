@@ -32,7 +32,8 @@ namespace SpetralAmlysisForms
             Form1.formContainer.gain = vScrollBar3.Value - 50;
             Form1.formContainer.k1 = 20 * vScrollBar1.Value / 100;
             Form1.formContainer.k2 = 0.01 + (2 * vScrollBar2.Value / 100);
-            Form1.formContainer.test(5);
+            //Form1.formContainer.fill_series(powerOfTwo);
+
         }
 
         private void Graph_Deactivate(object sender, EventArgs e)
