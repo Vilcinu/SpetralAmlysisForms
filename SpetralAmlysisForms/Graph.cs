@@ -18,8 +18,8 @@ namespace SpetralAmlysisForms
         {
             InitializeComponent();
             formContainer = this;
-            series = Form1.formContainer.series;
-            chart1.Series.Add(series);
+            //series[0] = Form1.formContainer.series;
+            //chart1.Series.Add(series);
         }
 
         private void circleKnob1_Click(object sender, EventArgs e)

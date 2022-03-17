@@ -11,7 +11,7 @@ namespace SpetralAmlysisForms
         private double _K2;
         private double _gain;
         private double _bandwith;
-        private double[] _a = new double[2];
+        private double[] _a = new double[3];
         private double[] _b = new double[3];
 
         public Filter()
@@ -73,57 +73,53 @@ namespace SpetralAmlysisForms
             return Result;
         }
 
-        public static Complex[] filter(Complex[] X, double w, double B, double alpha, double maxw)
+        public double[] filter(double[] X)
         {
             int filteParamsLength = 3;
-            alpha = Math.Pow(10, alpha / 20);
-            double accFuncArg = Math.PI / maxw;
-
-            double k1 = -Math.Cos(w * accFuncArg);
-            double k2 = (1 - Math.Sin(B * accFuncArg)) / Math.Cos(B * accFuncArg);
+            //alpha = Math.Pow(10, alpha / 20);
+            //double accFuncArg = Math.PI / maxw;
 
             double[] a = new double[filteParamsLength];
             double[] b = new double[filteParamsLength];
 
-            Complex[] Y = new Complex[X.Length];
+            double[] Y = new double[X.Length];
             Complex A_Part = new Complex(0, 0);
             Complex B_Part = new Complex(0, 0);
 
-            Y[0] = new Complex(0, 0);
 
             {
-                b[0] = ((1 + alpha) + ((1 - alpha) * k2)) / 2;
+                b[0] = ((1 + gain) + ((1 - gain) *  this.K2)) / 2;
                 a[0] = 1;
 
-                b[1] = k1 * (1 + k2);
+                b[1] = this.K1 * (1 + this.K2);
                 a[1] = b[1];
 
-                b[2] = ((1 - alpha) + ((1 + alpha) * k2)) / 2;
-                a[2] = k2;
+                b[2] = ((1 - gain) + ((1 + gain) * this.K2)) / 2;
+                a[2] = this.K2;
             }
 
             for (int n = filteParamsLength; n < X.Length; n++)
             {
                 for (int k = 0; k < filteParamsLength; k++)
                 {
-                    B_Part = new Complex(b[k] * X[n - k].Real, 0);
+                    B_Part = new Complex(this._b[k] * X[n - k], 0);
                 }
                 for (int i = 1; i < filteParamsLength; i++)
                 {
-                    A_Part = new Complex(a[i] * Y[n - i - 1].Real, 0);
+                    A_Part = new Complex(this._a[i] * Y[n - i - 1], 0);
                 }
-                Y[n] = Complex.Subtract(A_Part, B_Part);
+                Y[n] = A_Part.Real - B_Part.Real;
             }
 
             return Y;
         }
         private void calculateCoefficents()
         {
-            this._b[0] = (0.5 * (1 + this._gain + this._K2 * (1 - this._gain)));
-            this._b[1] = (0.5 * (1 - this._gain + this._K2 * (1 + this._gain)));
-            this._b[2] = (this._K1 * (1 + this._K2));
-            this._a[0] = (this._K1 * (1 + this._K2));
-            this._a[1] = (this._K2);
+            this._b[0] = (0.5 * ((1 + this._gain) + (this._K2 * (1 - this._gain))));
+            this._b[1] = (this._K1 * (1 + this._K2));
+            this._b[2] = (0.5 * ((1 - this._gain) + (this._K2 * (1 + this._gain))));
+            this._a[1] = (this._K1 * (1 + this._K2));
+            this._a[2] = (this._K2);
         }
         public double[] Filter_Signal(double[] X)
         {
@@ -149,17 +145,21 @@ namespace SpetralAmlysisForms
                             + (this._K1 * (1 + this._K2)) * xn[n - 1] + (0.5f * (this._K2 * (1 + this._gain) + (1 - this._gain))) * xn[n - 2] - (_K1
                             * (1 + this._K2) * yn[n - 1]) - this._K2 * yn[n - 2];
                     }*/
-                    for(int i = 0; i < 2; i++)
+                    for(int i = 0; i < 3; i++)
                     {
-                        if (n - i == 0) break;
-                        //coefficient 'b' part
-                        Y[n] = this._b[i] * X[n - i];
+                        if (n - i > 0)
+                        {
+                            //coefficient 'b' part
+                            Y[n] = this._b[i] * X[n - i];
+                        }
                     }
-                    for (int k = 0; k < 1; k++)
+                    for (int k = 1; k < 3; k++)
                     {
-                        if (n - k == 0) break;
-                        //coefficient 'b' part
-                        Y[n] -= this._a[k] * X[n - k];
+                        if (n - k > 0)
+                        {
+                            //coefficient 'a' part
+                            Y[n] -= this._a[k] * X[n - k];
+                        }
                     }
 
                 }

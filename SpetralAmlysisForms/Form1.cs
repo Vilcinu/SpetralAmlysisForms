@@ -27,18 +27,20 @@ namespace SpetralAmlysisForms
         }
 
         private Filter filt = new Filter();
-        private int powerOfTwo = 7;
+        private int powerOfTwo = 9;
         private int evrywhereValue = 25;
         private int __audioDuration = 10;
         private int __FilterOption = 0;
         private int boxcount = 0;
+        private int animationresult = 1;
+        private bool animate = true;
         private double[] Signal;
         private double[] Signalphase;
         private double[] originalSignal;
         private int samplesPerSecond = 1024;
         private double beforeChartWillBreakValue = 10E10;
         public static Form1 formContainer;
-        public System.Windows.Forms.DataVisualization.Charting.Series series;
+        public System.Windows.Forms.DataVisualization.Charting.Series[] series= new System.Windows.Forms.DataVisualization.Charting.Series[4];
         public System.Windows.Forms.DataVisualization.Charting.Series seriesphase;
         public Graph graph;
         public double _SignalSample;
@@ -58,15 +60,22 @@ namespace SpetralAmlysisForms
             _SignalSample = 5000;
             hScrollBar3.Value = 50;
             formContainer = this;
-            series = charts[0].Series.Add("Test Text");
+            
             seriesphase = chart2.Series.Add("Test Text");
+            for (int n = 0; n < series.Length; n++)
+            {
+                this.series[n] = new System.Windows.Forms.DataVisualization.Charting.Series();
+                this.series[n] = charts[0].Series.Add(n.ToString());
+                this.series[n].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                this.charts[n].Series[0].MarkerSize = 4;
+            }
             for (int n = 0; n < Math.Pow(2, powerOfTwo); n++)
             {
-                series.Points.AddXY(n, f(n));
+                series[3].Points.AddXY(n, f(n));
                 seriesphase.Points.AddXY(n, n);
             }
-            this.series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            this.charts[0].Series[0].MarkerSize = 4;
+
+
             graph = new Graph();
             originalSignal = new double[(int)Math.Pow(2, powerOfTwo)];
             for (int n = 0; n < Math.Pow(2,powerOfTwo); n++)
@@ -79,7 +88,8 @@ namespace SpetralAmlysisForms
 
         public double f(int arg)
         {
-            return 25 * Math.Cos(arg)+ 5*Math.Cos(2 * arg) +  Math.Cos(2 * arg) + 3 * Math.Cos(2 * arg) + 4* Math.Cos(2 * arg);
+            //return 25 * Math.Cos(arg)+ 5*Math.Cos(2 * arg) +  Math.Cos(2 * arg) + 3 * Math.Cos(2 * arg) + 4* Math.Cos(2 * arg);
+            return Math.Sin(arg/13)+Math.Sin(arg*130);
         }
 
         public double FindMin(double[] input)//type = REAL,IMAGINARY,PHASE,MAGNITUDE;
@@ -104,18 +114,22 @@ namespace SpetralAmlysisForms
             return max;
         }
 
-        public async Task drawcahrt()
+        public void drawcahrt()
         {
             this.charts[boxcount].Series.Clear();
             this.chart2.Series.Clear();
 
             //setChartMinAndMax(Signal);
 
-            this.series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            this.series[boxcount].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             //chart1.ChartAreas[0].AxisY.Minimum = 0;
             //chart1.ChartAreas[0].AxisY.Maximum = 100;
-            this.charts[boxcount].Series.Add(series);
+            this.charts[boxcount].Series.Add(series[boxcount]);
             this.chart2.Series.Add(seriesphase);
+            this.chart2.ChartAreas[0].AxisX.Minimum = 0;
+            this.chart2.ChartAreas[0].AxisX.Maximum = Signal.Length/2;
+            this.chart2.ChartAreas[0].AxisY.Minimum = 0;
+            this.chart2.ChartAreas[0].AxisY.Maximum = 100;
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -124,14 +138,15 @@ namespace SpetralAmlysisForms
                 fill_series(powerOfTwo);
         }
 
-        public async Task fill_series(int input)//input amount;
+        public void fill_series(int input)//input amount;
         {
-            series.Points.Clear();
+            series[boxcount].Points.Clear();
             seriesphase.Points.Clear();
             int power = (int)Math.Pow(2, input);
             Signal = new double[power];
             filt.Sample = power*2;
-            switch(boxcount)
+            
+            switch (boxcount)
             {
                 case 0:
                     signalFilter().Wait();
@@ -142,7 +157,7 @@ namespace SpetralAmlysisForms
                     break;
 
                 case 2:
-                    eqFilter().Wait();
+                    //eqFilter().Wait();
                     break;
 
                 default:
@@ -151,13 +166,18 @@ namespace SpetralAmlysisForms
 
 
             }
-            for (int n = 0; n < power; n++)
+            Signalphase = SDFT.sdft(Signal);
+            for (int n = 0; n < Signal.Length; n++)
             {
-                this.series.Points.AddXY(n, Signal[n]);
+                //Signal[n] = originalSignal[n] - Signal[n];
+            }
+                for (int n = 0; n < power; n++)
+            {
+                this.series[boxcount].Points.AddXY(n, Signal[n]);
                 this.seriesphase.Points.AddXY(n, Signalphase[n]);
             }
             //_ = Round(Signal, 7);
-            await drawcahrt();
+            drawcahrt();
         }
 
         private void circleKnob1_Click(object sender, EventArgs e)
@@ -176,7 +196,7 @@ namespace SpetralAmlysisForms
 
         private void circleKnob2_Click(object sender, EventArgs e)
         {
-            fill_series(powerOfTwo).Wait() ;
+            fill_series(powerOfTwo);
         }
         private void FilterOptionComboBox_VisibleChanged(object sender, EventArgs e)
         {
@@ -191,8 +211,8 @@ namespace SpetralAmlysisForms
         {
             
             filt.gain = hScrollBar3.Value - 50;
-            filt.K1 = (double)hScrollBar1.Value*filt.maxFreq/91;
-            filt.K2 = (double)(hScrollBar2.Value)*42/91;
+            filt.K1 = (double)hScrollBar1.Value*filt.maxFreq/100;
+            filt.K2 = (double)(hScrollBar2.Value)*42*2.6/91;
             label4.Text = filt.K1.ToString();
             label5.Text = filt.K2.ToString();
             label6.Text = filt.gain.ToString();
@@ -466,7 +486,8 @@ namespace SpetralAmlysisForms
         }
         private async Task fftFilter()
         {
-            Signalphase = SDFT.sdft(originalSignal);
+            
+            Signal = Signalphase;
         }
         private async Task eqFilter()
         {
@@ -503,73 +524,67 @@ namespace SpetralAmlysisForms
 
             textBox4.Text = boxcount.ToString();//button5678[0]
             var dirrection = e.Delta/120;
-
+            if(animationresult == 0)
+            {
+                return;           
+            }
            
             if(dirrection > 0)//scroll UP
             {
-                moveup();
+                animationresult = await moveup();
             }
-            if(dirrection<0) //scroll DOWN
+            if (dirrection < 0) //scroll DOWN
             {
-                movedown();
+                animationresult = await movedown();
             }
             label7.Text = boxcount.ToString();
         }
-        private async void moveup()
+        private async Task<int> moveup()
         {
-            double buttonLocation = 0;
+            if (boxcount != 3)
+            {
+                animationresult = 0;
+                double buttonLocation = 0;
+                boxcount++;
+                fill_series(powerOfTwo);
+                boxcount--;
+                if (charts[boxcount].Location.Y == 0)
+                {
+                    charts[boxcount].Location = new Point(charts[boxcount].Location.X, -2);
+                }
+                while (charts[boxcount].Location.Y > panel5.Height*-1)
+                {
+                    buttonLocation = (double)charts[boxcount].Location.Y / 2;
+                    buttonLocation = charts[boxcount].Location.Y + buttonLocation;
+                    charts[boxcount].Location = new Point(charts[boxcount].Location.X, (int)buttonLocation);
+                    if (animate)
+                        await Task.Delay(3);
+                }
+                charts[boxcount].Series.Clear();
+                boxcount++;
+            }
+            return 1;
+        }
+        private async Task<int> movedown()
+        {   
             if (boxcount != 0)
             {
+                animationresult = 0;
+                double buttonLocation = 0;
                 boxcount--;
                 fill_series(powerOfTwo);
-                boxcount++;
+                
+                while (charts[boxcount].Location.Y<0)
+                {
+                    buttonLocation = (double)charts[boxcount].Location.Y / 6;
+                    buttonLocation = charts[boxcount].Location.Y - buttonLocation;
+                    charts[boxcount].Location = new Point(charts[boxcount].Location.X, (int)buttonLocation);
+                    if (animate)
+                        await Task.Delay(5);
+                }
+                charts[boxcount + 1].Series.Clear();
             }
-            if (charts[boxcount].Location.Y == 0)
-            {
-                charts[boxcount].Location = new Point(charts[boxcount].Location.X, -1);
-            }
-            while (charts[boxcount].Location.Y > panel5.Height * -1)
-            {
-                buttonLocation = (double)(charts[boxcount].Location.Y + (double)(charts[boxcount].Location.Y) / 6);
-                buttonLocation = Math.Floor(buttonLocation);
-                charts[boxcount].Location = new Point(charts[boxcount].Location.X, (int)buttonLocation);
-                await Task.Delay(5);
-            }
-            if (charts[boxcount].Location.Y <= panel5.Height * -1)
-            {
-                charts[boxcount].Location = new Point(charts[boxcount].Location.X, panel5.Height * -1);
-
-                boxcount++;
-                if (boxcount > 3)
-                    boxcount--;
-                else
-                    this.charts[boxcount - 1].Series.Clear();
-
-                fill_series(powerOfTwo);
-            }
-        }
-        private async void movedown()
-        {
-            double buttonLocation = 0;
-            fill_series(powerOfTwo);
-
-
-            while (charts[boxcount].Location.Y < 0)
-            {
-
-                buttonLocation = (double)(charts[boxcount].Location.Y - (double)charts[boxcount].Location.Y / 6);
-                charts[boxcount].Location = new Point(charts[boxcount].Location.X, (int)buttonLocation);
-                await Task.Delay(5);
-            }
-            if (charts[boxcount].Location.Y <= 0)
-            {
-                charts[boxcount].Location = new Point(charts[boxcount].Location.X, -1);
-
-
-                fill_series(powerOfTwo);
-                if (boxcount != 0)
-                    boxcount--;
-            }
+            return 1;
         }
     }
 }
