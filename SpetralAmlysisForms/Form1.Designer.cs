@@ -30,19 +30,17 @@ namespace SpetralAmlysisForms
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ColorStringTextBox = new System.Windows.Forms.TextBox();
             this.hScrollBar3 = new System.Windows.Forms.HScrollBar();
@@ -79,21 +77,21 @@ namespace SpetralAmlysisForms
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.EQCHART = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.FREQCHART = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.WAVECHART = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.FUNCTIONCHART = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.WAVECHART = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.FREQCHART = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.EQCHART = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.knobsPictureBox = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EQCHART)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FREQCHART)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WAVECHART)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FUNCTIONCHART)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WAVECHART)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FREQCHART)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EQCHART)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.knobsPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // ColorStringTextBox
@@ -109,7 +107,7 @@ namespace SpetralAmlysisForms
             this.hScrollBar3.LargeChange = 5;
             this.hScrollBar3.Location = new System.Drawing.Point(5, 47);
             this.hScrollBar3.Name = "hScrollBar3";
-            this.hScrollBar3.Size = new System.Drawing.Size(718, 21);
+            this.hScrollBar3.Size = new System.Drawing.Size(338, 21);
             this.hScrollBar3.TabIndex = 2;
             this.hScrollBar3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
@@ -119,7 +117,7 @@ namespace SpetralAmlysisForms
             this.hScrollBar1.LargeChange = 5;
             this.hScrollBar1.Location = new System.Drawing.Point(5, 5);
             this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(718, 21);
+            this.hScrollBar1.Size = new System.Drawing.Size(338, 21);
             this.hScrollBar1.TabIndex = 1;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             this.hScrollBar1.MouseLeave += new System.EventHandler(this.FilterOptionComboBox_VisibleChanged);
@@ -130,13 +128,14 @@ namespace SpetralAmlysisForms
             this.hScrollBar2.LargeChange = 5;
             this.hScrollBar2.Location = new System.Drawing.Point(5, 26);
             this.hScrollBar2.Name = "hScrollBar2";
-            this.hScrollBar2.Size = new System.Drawing.Size(718, 21);
+            this.hScrollBar2.Size = new System.Drawing.Size(338, 21);
             this.hScrollBar2.TabIndex = 0;
             this.hScrollBar2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             this.hScrollBar2.MouseLeave += new System.EventHandler(this.FilterOptionComboBox_VisibleChanged);
             // 
             // panel1
             // 
+            this.panel1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.FilterOptionComboBox);
@@ -165,13 +164,12 @@ namespace SpetralAmlysisForms
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.panel4);
-            this.panel1.Location = new System.Drawing.Point(14, 317);
+            this.panel1.Location = new System.Drawing.Point(14, 12);
             this.panel1.Margin = new System.Windows.Forms.Padding(5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(414, 287);
+            this.panel1.Size = new System.Drawing.Size(350, 287);
             this.panel1.TabIndex = 63;
             this.panel1.MouseEnter += new System.EventHandler(this.panel1_MouseEnter);
-            this.panel1.MouseLeave += new System.EventHandler(this.panel1_MouseLeave);
             // 
             // FilterOptionComboBox
             // 
@@ -404,7 +402,6 @@ namespace SpetralAmlysisForms
             this.textBox1.Size = new System.Drawing.Size(100, 22);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "1";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // panel4
             // 
@@ -413,7 +410,7 @@ namespace SpetralAmlysisForms
             this.panel4.Controls.Add(this.button2);
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(404, 145);
+            this.panel4.Size = new System.Drawing.Size(342, 145);
             this.panel4.TabIndex = 0;
             // 
             // button4
@@ -422,7 +419,7 @@ namespace SpetralAmlysisForms
             this.button4.Dock = System.Windows.Forms.DockStyle.Top;
             this.button4.Location = new System.Drawing.Point(0, 94);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(404, 47);
+            this.button4.Size = new System.Drawing.Size(342, 47);
             this.button4.TabIndex = 2;
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = false;
@@ -436,7 +433,7 @@ namespace SpetralAmlysisForms
             this.button3.Dock = System.Windows.Forms.DockStyle.Top;
             this.button3.Location = new System.Drawing.Point(0, 47);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(404, 47);
+            this.button3.Size = new System.Drawing.Size(342, 47);
             this.button3.TabIndex = 1;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = false;
@@ -450,7 +447,7 @@ namespace SpetralAmlysisForms
             this.button2.Dock = System.Windows.Forms.DockStyle.Top;
             this.button2.Location = new System.Drawing.Point(0, 0);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(404, 47);
+            this.button2.Size = new System.Drawing.Size(342, 47);
             this.button2.TabIndex = 0;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = false;
@@ -465,137 +462,26 @@ namespace SpetralAmlysisForms
             this.panel3.Controls.Add(this.hScrollBar3);
             this.panel3.Controls.Add(this.hScrollBar2);
             this.panel3.Controls.Add(this.hScrollBar1);
-            this.panel3.Location = new System.Drawing.Point(438, 478);
+            this.panel3.Location = new System.Drawing.Point(14, 309);
             this.panel3.Margin = new System.Windows.Forms.Padding(5);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(5);
-            this.panel3.Size = new System.Drawing.Size(730, 126);
+            this.panel3.Size = new System.Drawing.Size(350, 161);
             this.panel3.TabIndex = 64;
-            // 
-            // chart2
-            // 
-            this.chart2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.chart2.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            this.chart2.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            this.chart2.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.chart2.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.chart2.BorderSkin.BorderWidth = 0;
-            this.chart2.BorderSkin.PageColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
-            chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.False;
-            chartArea1.BackColor = System.Drawing.Color.Silver;
-            chartArea1.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea1);
-            this.chart2.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.chart2.Location = new System.Drawing.Point(14, 610);
-            this.chart2.Margin = new System.Windows.Forms.Padding(0);
-            this.chart2.Name = "chart2";
-            this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            this.chart2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chart2.Series.Add(series1);
-            this.chart2.Size = new System.Drawing.Size(1154, 172);
-            this.chart2.TabIndex = 65;
-            this.chart2.Text = "chart2";
             // 
             // panel5
             // 
+            this.panel5.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(20)))), ((int)(((byte)(30)))));
             this.panel5.Controls.Add(this.FUNCTIONCHART);
             this.panel5.Controls.Add(this.WAVECHART);
             this.panel5.Controls.Add(this.FREQCHART);
             this.panel5.Controls.Add(this.EQCHART);
-            this.panel5.Location = new System.Drawing.Point(436, 12);
+            this.panel5.Location = new System.Drawing.Point(372, 12);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(734, 458);
+            this.panel5.Size = new System.Drawing.Size(698, 458);
             this.panel5.TabIndex = 66;
-            this.panel5.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel5_MouseMove);
             this.panel5.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.panel5_MouseWheel);
-            // 
-            // EQCHART
-            // 
-            this.EQCHART.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.EQCHART.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            this.EQCHART.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            this.EQCHART.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.EQCHART.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.EQCHART.BorderSkin.BorderWidth = 0;
-            this.EQCHART.BorderSkin.PageColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            chartArea5.BackColor = System.Drawing.Color.Silver;
-            chartArea5.Name = "ChartArea1";
-            this.EQCHART.ChartAreas.Add(chartArea5);
-            this.EQCHART.Cursor = System.Windows.Forms.Cursors.Cross;
-            legend4.Name = "Legend1";
-            this.EQCHART.Legends.Add(legend4);
-            this.EQCHART.Location = new System.Drawing.Point(0, 0);
-            this.EQCHART.Margin = new System.Windows.Forms.Padding(0);
-            this.EQCHART.Name = "EQCHART";
-            this.EQCHART.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            this.EQCHART.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.EQCHART.Series.Add(series5);
-            this.EQCHART.Size = new System.Drawing.Size(734, 458);
-            this.EQCHART.TabIndex = 57;
-            this.EQCHART.Text = "chart6";
-            // 
-            // FREQCHART
-            // 
-            this.FREQCHART.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.FREQCHART.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            this.FREQCHART.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            this.FREQCHART.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.FREQCHART.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.FREQCHART.BorderSkin.BorderWidth = 0;
-            this.FREQCHART.BorderSkin.PageColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            chartArea4.BackColor = System.Drawing.Color.Silver;
-            chartArea4.Name = "ChartArea1";
-            this.FREQCHART.ChartAreas.Add(chartArea4);
-            this.FREQCHART.Cursor = System.Windows.Forms.Cursors.Cross;
-            legend3.Name = "Legend1";
-            this.FREQCHART.Legends.Add(legend3);
-            this.FREQCHART.Location = new System.Drawing.Point(0, 0);
-            this.FREQCHART.Margin = new System.Windows.Forms.Padding(0);
-            this.FREQCHART.Name = "FREQCHART";
-            this.FREQCHART.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            this.FREQCHART.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.FREQCHART.Series.Add(series4);
-            this.FREQCHART.Size = new System.Drawing.Size(734, 458);
-            this.FREQCHART.TabIndex = 56;
-            this.FREQCHART.Text = "chart5";
-            // 
-            // WAVECHART
-            // 
-            this.WAVECHART.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
-            this.WAVECHART.BorderlineColor = System.Drawing.Color.WhiteSmoke;
-            this.WAVECHART.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            this.WAVECHART.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.WAVECHART.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.WAVECHART.BorderSkin.BorderWidth = 0;
-            this.WAVECHART.BorderSkin.PageColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            chartArea3.BackColor = System.Drawing.Color.Silver;
-            chartArea3.Name = "ChartArea1";
-            this.WAVECHART.ChartAreas.Add(chartArea3);
-            this.WAVECHART.Cursor = System.Windows.Forms.Cursors.Cross;
-            legend2.Name = "Legend1";
-            this.WAVECHART.Legends.Add(legend2);
-            this.WAVECHART.Location = new System.Drawing.Point(0, 0);
-            this.WAVECHART.Margin = new System.Windows.Forms.Padding(0);
-            this.WAVECHART.Name = "WAVECHART";
-            this.WAVECHART.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
-            this.WAVECHART.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.WAVECHART.Series.Add(series3);
-            this.WAVECHART.Size = new System.Drawing.Size(734, 458);
-            this.WAVECHART.TabIndex = 55;
-            this.WAVECHART.Text = "chart4";
             // 
             // FUNCTIONCHART
             // 
@@ -606,9 +492,9 @@ namespace SpetralAmlysisForms
             this.FUNCTIONCHART.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.FUNCTIONCHART.BorderSkin.BorderWidth = 0;
             this.FUNCTIONCHART.BorderSkin.PageColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            chartArea2.BackColor = System.Drawing.Color.Silver;
-            chartArea2.Name = "ChartArea1";
-            this.FUNCTIONCHART.ChartAreas.Add(chartArea2);
+            chartArea1.BackColor = System.Drawing.Color.Silver;
+            chartArea1.Name = "ChartArea1";
+            this.FUNCTIONCHART.ChartAreas.Add(chartArea1);
             this.FUNCTIONCHART.Cursor = System.Windows.Forms.Cursors.Cross;
             legend1.Name = "Legend1";
             this.FUNCTIONCHART.Legends.Add(legend1);
@@ -617,40 +503,137 @@ namespace SpetralAmlysisForms
             this.FUNCTIONCHART.Name = "FUNCTIONCHART";
             this.FUNCTIONCHART.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
             this.FUNCTIONCHART.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.FUNCTIONCHART.Series.Add(series1);
+            this.FUNCTIONCHART.Size = new System.Drawing.Size(698, 458);
+            this.FUNCTIONCHART.TabIndex = 54;
+            this.FUNCTIONCHART.Text = "chart3";
+            // 
+            // WAVECHART
+            // 
+            this.WAVECHART.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.WAVECHART.BorderlineColor = System.Drawing.Color.WhiteSmoke;
+            this.WAVECHART.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            this.WAVECHART.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.WAVECHART.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.WAVECHART.BorderSkin.BorderWidth = 0;
+            this.WAVECHART.BorderSkin.PageColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            chartArea2.BackColor = System.Drawing.Color.Silver;
+            chartArea2.Name = "ChartArea1";
+            this.WAVECHART.ChartAreas.Add(chartArea2);
+            this.WAVECHART.Cursor = System.Windows.Forms.Cursors.Cross;
+            legend2.Name = "Legend1";
+            this.WAVECHART.Legends.Add(legend2);
+            this.WAVECHART.Location = new System.Drawing.Point(0, 0);
+            this.WAVECHART.Margin = new System.Windows.Forms.Padding(0);
+            this.WAVECHART.Name = "WAVECHART";
+            this.WAVECHART.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            this.WAVECHART.RightToLeft = System.Windows.Forms.RightToLeft.No;
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
-            this.FUNCTIONCHART.Series.Add(series2);
-            this.FUNCTIONCHART.Size = new System.Drawing.Size(734, 458);
-            this.FUNCTIONCHART.TabIndex = 54;
-            this.FUNCTIONCHART.Text = "chart3";
+            this.WAVECHART.Series.Add(series2);
+            this.WAVECHART.Size = new System.Drawing.Size(698, 458);
+            this.WAVECHART.TabIndex = 55;
+            this.WAVECHART.Text = "chart4";
+            // 
+            // FREQCHART
+            // 
+            this.FREQCHART.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.FREQCHART.BorderlineColor = System.Drawing.Color.WhiteSmoke;
+            this.FREQCHART.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            this.FREQCHART.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.FREQCHART.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.FREQCHART.BorderSkin.BorderWidth = 0;
+            this.FREQCHART.BorderSkin.PageColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            chartArea3.BackColor = System.Drawing.Color.Silver;
+            chartArea3.Name = "ChartArea1";
+            this.FREQCHART.ChartAreas.Add(chartArea3);
+            this.FREQCHART.Cursor = System.Windows.Forms.Cursors.Cross;
+            legend3.Name = "Legend1";
+            this.FREQCHART.Legends.Add(legend3);
+            this.FREQCHART.Location = new System.Drawing.Point(0, 0);
+            this.FREQCHART.Margin = new System.Windows.Forms.Padding(0);
+            this.FREQCHART.Name = "FREQCHART";
+            this.FREQCHART.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            this.FREQCHART.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.FREQCHART.Series.Add(series3);
+            this.FREQCHART.Size = new System.Drawing.Size(698, 458);
+            this.FREQCHART.TabIndex = 56;
+            this.FREQCHART.Text = "chart5";
+            // 
+            // EQCHART
+            // 
+            this.EQCHART.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.EQCHART.BorderlineColor = System.Drawing.Color.WhiteSmoke;
+            this.EQCHART.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+            this.EQCHART.BorderSkin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.EQCHART.BorderSkin.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.EQCHART.BorderSkin.BorderWidth = 0;
+            this.EQCHART.BorderSkin.PageColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            chartArea4.BackColor = System.Drawing.Color.Silver;
+            chartArea4.Name = "ChartArea1";
+            this.EQCHART.ChartAreas.Add(chartArea4);
+            this.EQCHART.Cursor = System.Windows.Forms.Cursors.Cross;
+            legend4.Name = "Legend1";
+            this.EQCHART.Legends.Add(legend4);
+            this.EQCHART.Location = new System.Drawing.Point(0, 0);
+            this.EQCHART.Margin = new System.Windows.Forms.Padding(0);
+            this.EQCHART.Name = "EQCHART";
+            this.EQCHART.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            this.EQCHART.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.EQCHART.Series.Add(series4);
+            this.EQCHART.Size = new System.Drawing.Size(698, 458);
+            this.EQCHART.TabIndex = 57;
+            this.EQCHART.Text = "chart6";
+            // 
+            // knobsPictureBox
+            // 
+            this.knobsPictureBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.knobsPictureBox.Location = new System.Drawing.Point(14, 478);
+            this.knobsPictureBox.Name = "knobsPictureBox";
+            this.knobsPictureBox.Size = new System.Drawing.Size(1056, 163);
+            this.knobsPictureBox.TabIndex = 67;
+            this.knobsPictureBox.TabStop = false;
+            this.knobsPictureBox.WaitOnLoad = true;
+            this.knobsPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.knobsPictureBox_MouseMove);
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.ClientSize = new System.Drawing.Size(1182, 791);
+            this.ClientSize = new System.Drawing.Size(1082, 653);
+            this.Controls.Add(this.knobsPictureBox);
             this.Controls.Add(this.panel5);
-            this.Controls.Add(this.chart2);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.ColorStringTextBox);
             this.Font = new System.Drawing.Font("Arial Narrow", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1200, 700);
+            this.MinimumSize = new System.Drawing.Size(1100, 700);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Activated += new System.EventHandler(this.Form1_Activated);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.panel5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.EQCHART)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FREQCHART)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.WAVECHART)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FUNCTIONCHART)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.WAVECHART)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FREQCHART)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EQCHART)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.knobsPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -692,13 +675,13 @@ namespace SpetralAmlysisForms
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.ComboBox FilterOptionComboBox;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.Panel panel5;
         public System.Windows.Forms.DataVisualization.Charting.Chart[] charts = new System.Windows.Forms.DataVisualization.Charting.Chart[4];
         private System.Windows.Forms.DataVisualization.Charting.Chart EQCHART;
         private System.Windows.Forms.DataVisualization.Charting.Chart FREQCHART;
         private System.Windows.Forms.DataVisualization.Charting.Chart WAVECHART;
         private System.Windows.Forms.DataVisualization.Charting.Chart FUNCTIONCHART;
+        private System.Windows.Forms.PictureBox knobsPictureBox;
     }
 }
 

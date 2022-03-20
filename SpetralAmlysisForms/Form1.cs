@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,13 @@ namespace SpetralAmlysisForms
             public const int PHASE = 2;
             public const int MAGNITUDE = 3;
         }
+        public static class knobParams
+        {
+            public const int width = 100;
+            public const int height = 100;
+            public const int color = 2;
+            public const int angle = 0;
+        }
 
         private Filter filt = new Filter();
         private int powerOfTwo = 9;
@@ -39,6 +47,11 @@ namespace SpetralAmlysisForms
         private double[] originalSignal;
         private int samplesPerSecond = 1024;
         private double beforeChartWillBreakValue = 10E10;
+        private Graphics graphicsKnobs;
+        private float sweepangle = 0;
+        private Pen knobPen = new Pen(Color.White);
+        private Point prevmouselocation;
+        private int knoblock;
         public static Form1 formContainer;
         public System.Windows.Forms.DataVisualization.Charting.Series[] series= new System.Windows.Forms.DataVisualization.Charting.Series[4];
         public System.Windows.Forms.DataVisualization.Charting.Series seriesphase;
@@ -60,8 +73,7 @@ namespace SpetralAmlysisForms
             _SignalSample = 5000;
             hScrollBar3.Value = 50;
             formContainer = this;
-            
-            seriesphase = chart2.Series.Add("Test Text");
+            graphicsKnobs = this.knobsPictureBox.CreateGraphics();
             for (int n = 0; n < series.Length; n++)
             {
                 this.series[n] = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -72,7 +84,6 @@ namespace SpetralAmlysisForms
             for (int n = 0; n < Math.Pow(2, powerOfTwo); n++)
             {
                 series[3].Points.AddXY(n, f(n));
-                seriesphase.Points.AddXY(n, n);
             }
 
 
@@ -84,8 +95,13 @@ namespace SpetralAmlysisForms
                 originalSignal[n] = f(n);
 
             }
+            knobPen.Width = 2;
+            drawKnobs();
         }
-
+        private Point mouseLocation(Point senderLocation)
+        {
+            return new Point(-this.Location.X + MousePosition.X - senderLocation.X-8, -this.Location.Y + MousePosition.Y - senderLocation.Y-33);
+        }
         public double f(int arg)
         {
             //return 25 * Math.Cos(arg)+ 5*Math.Cos(2 * arg) +  Math.Cos(2 * arg) + 3 * Math.Cos(2 * arg) + 4* Math.Cos(2 * arg);
@@ -117,7 +133,6 @@ namespace SpetralAmlysisForms
         public void drawcahrt()
         {
             this.charts[boxcount].Series.Clear();
-            this.chart2.Series.Clear();
 
             //setChartMinAndMax(Signal);
 
@@ -125,11 +140,6 @@ namespace SpetralAmlysisForms
             //chart1.ChartAreas[0].AxisY.Minimum = 0;
             //chart1.ChartAreas[0].AxisY.Maximum = 100;
             this.charts[boxcount].Series.Add(series[boxcount]);
-            this.chart2.Series.Add(seriesphase);
-            this.chart2.ChartAreas[0].AxisX.Minimum = 0;
-            this.chart2.ChartAreas[0].AxisX.Maximum = Signal.Length/2;
-            this.chart2.ChartAreas[0].AxisY.Minimum = 0;
-            this.chart2.ChartAreas[0].AxisY.Maximum = 100;
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -141,7 +151,7 @@ namespace SpetralAmlysisForms
         public void fill_series(int input)//input amount;
         {
             series[boxcount].Points.Clear();
-            seriesphase.Points.Clear();
+            //seriesphase.Points.Clear();
             int power = (int)Math.Pow(2, input);
             Signal = new double[power];
             filt.Sample = power*2;
@@ -174,7 +184,7 @@ namespace SpetralAmlysisForms
                 for (int n = 0; n < power; n++)
             {
                 this.series[boxcount].Points.AddXY(n, Signal[n]);
-                this.seriesphase.Points.AddXY(n, Signalphase[n]);
+                //this.seriesphase.Points.AddXY(n, Signalphase[n]);
             }
             //_ = Round(Signal, 7);
             drawcahrt();
@@ -207,7 +217,7 @@ namespace SpetralAmlysisForms
                 GetValuesFromScrollBoxes();
         }
 
-        private async Task GetValuesFromScrollBoxes()
+        private async void GetValuesFromScrollBoxes()
         {
             
             filt.gain = hScrollBar3.Value - 50;
@@ -263,6 +273,7 @@ namespace SpetralAmlysisForms
 
         private async void button_MouseLeave(object sender, EventArgs e)
         {
+            
             while (((Button)sender).Tag == "1")
             {
                 await Task.Delay(20);
@@ -285,14 +296,13 @@ namespace SpetralAmlysisForms
                 color = ((Button)sender).BackColor.R;
                 await Task.Delay(1);
             }
-            fadeAnim();
         }
 
         private async void panel1_MouseEnter(object sender, EventArgs e)
         {
             //414, 456
 
-            int growUntily = 456;
+            /*int growUntily = 456;
             ((Panel)sender).Tag = "1";
             while (panel1.Size.Height < growUntily)
             {
@@ -306,41 +316,8 @@ namespace SpetralAmlysisForms
                 {
                     panel1.Size = new Size(panel1.Size.Width, 456);
                 }
-            }
-        }
-
-        private async void panel1_MouseLeave(object sender, EventArgs e)
-        {
-            /*int growUntily = 64;
-            ((Panel)sender).Tag = "0";
-            while (panel1.Size.Height > growUntily)
-            {
-                if (((Panel)sender).Tag.ToString() != "0")
-                {
-                    return;
-                }
-                panel1.Size = new Size(414, panel1.Size.Height - panel1.Size.Height/25) ;
-                await Task.Delay(1);
             }*/
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            /*if (((TextBox)sender).Text == "")
-            {
-                ((TextBox)sender).Text = "0";
-            }
-            filt.Sample = Convert.ToDouble(textBox4.Text);
-            filt.gain = Convert.ToDouble(textBox3.Text);
-            filt.K1 = Convert.ToDouble(textBox1.Text);
-            filt.K2 = Convert.ToDouble(textBox2.Text);
-            label4.Text = filt.K1.ToString();
-            label5.Text = filt.K2.ToString();
-            label6.Text = filt.gain.ToString();
-            getAsandBs();
-            test(powerOfTwo);*/
-        }
-
         private void getAsandBs()
         {
             b0_text.Text = String.Format("{0:0.0000000}", (0.5 * (1 + filt.gain + filt.K2 * (1 - filt.gain))));
@@ -497,27 +474,6 @@ namespace SpetralAmlysisForms
             }
             Signal = filt.For_ABS(Signal);
         }
-
-        private void panel5_MouseEnter(object sender, EventArgs e)
-        {
-            
-            
-        }
-
-        private void panel5_MouseCaptureChanged(object sender, EventArgs e)
-        {
-            
-           // if()
-        }
-
-
-        private void panel5_MouseMove(object sender, MouseEventArgs e)
-        {
-            
-            
-
-
-        }
         private async void panel5_MouseWheel(object sender, MouseEventArgs e)
         {
            
@@ -535,7 +491,7 @@ namespace SpetralAmlysisForms
             }
             if (dirrection < 0) //scroll DOWN
             {
-                animationresult = await movedown();
+               animationresult =  await movedown();
             }
             label7.Text = boxcount.ToString();
         }
@@ -585,6 +541,70 @@ namespace SpetralAmlysisForms
                 charts[boxcount + 1].Series.Clear();
             }
             return 1;
+        }
+        private void initKnobs()
+        {
+            graphicsKnobs.DrawLine(knobPen, 0,0,100,100);
+        }
+
+        private async  void Form1_Shown(object sender, EventArgs e)
+        {
+            drawKnobs();
+        }
+
+        private async void Form1_Activated(object sender, EventArgs e)
+        {
+            
+            drawKnobs();
+        }
+
+        private async void knobsPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            label7.Text = sweepangle.ToString();
+            if (e.Button != MouseButtons.Left)
+            {
+                knoblock = 0;
+            }
+            if (e.Button == MouseButtons.Left)
+            {
+                drawKnobs();
+                if (knoblock != 1) 
+                    if (mouseLocation(knobsPictureBox.Location).Y > (knobsPictureBox.Height - knobParams.height) / 2 && mouseLocation(knobsPictureBox.Location).Y < knobParams.height + (knobsPictureBox.Height - knobParams.height) / 2)
+                        if (mouseLocation(knobsPictureBox.Location).X > 50 && mouseLocation(knobsPictureBox.Location).X < 50 + knobParams.width)
+                        {
+                            knoblock = 1;
+                        }
+            }
+            if(knoblock==1)
+            {
+                if (prevmouselocation.Y < MousePosition.Y)
+                {
+                    sweepangle -= 2;
+                    if (sweepangle < 0)
+                        sweepangle = 0;
+                }
+                if (prevmouselocation.Y > MousePosition.Y)
+                {
+                    sweepangle += 2;
+                    if (sweepangle > 360)
+                        sweepangle = 360;
+                }
+            }
+            knobPen.Width = 5;
+            graphicsKnobs.DrawArc(knobPen, new Rectangle(20+50, 20+knobsPictureBox.Height / 2 - knobParams.height / 2, knobParams.width - 40, knobParams.height - 40), 180, sweepangle);
+            knobPen.Width = 2;
+            hScrollBar1.Value = (int)(sweepangle * 100 / 360);
+            //await GetValuesFromScrollBoxes();
+            prevmouselocation = MousePosition;   
+        }
+        void drawKnobs()
+        {
+            PointF[] points = { new PointF(1, 1), new PointF(50, 50), new PointF(100, 150) };
+            graphicsKnobs.Clear(knobsPictureBox.BackColor);
+            //graphicsKnobs.DrawLine(knobPen, new Point(0, 0), mouseLocation(knobsPictureBox.Location));
+            graphicsKnobs.DrawArc(knobPen, new Rectangle(50, knobsPictureBox.Height/2-knobParams.height/2, knobParams.width, knobParams.height), 0, 360);
+            //graphicsKnobs.DrawLine(knobPen, new Point(0, 0),new Point(100,100));
+
         }
     }
 }
